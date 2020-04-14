@@ -16,6 +16,8 @@ export class Board extends React.Component{
         let newGrid = Array(19).fill().map(x => Array(19).fill("+"));
         this.setState({'grid':newGrid});
     }
+
+
     handleClick(x, y){
         if (this.state.grid[x][y] === '+'){
             const g = this.state.grid;
@@ -49,6 +51,7 @@ export class Board extends React.Component{
             if (w_horizontal >=  5 || w_vertical >=  5 || w_diag1 >=  5 || w_diag2 >=  5){
                 setTimeout(()=>{alert('white wins')}, 1);
                 this.ResetGrid()
+
             }
 
             if (b_horizontal >= 5 || b_vertical >= 5 || b_diag1 >= 5 || b_diag2 >= 5){
@@ -86,7 +89,6 @@ export class Board extends React.Component{
                         </tbody>
                     </table>
                 </div>
-                <br />
                 <button onClick={this.ResetGrid}>RESET</button>
             </div>
         )

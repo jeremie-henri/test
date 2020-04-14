@@ -9,6 +9,8 @@ class LoginForm extends React.Component {
         this.state = {
             username: '',
             password: '',
+            black: null,
+            white: null,
             buttonDisabled: false
         }
     }
@@ -33,7 +35,6 @@ class LoginForm extends React.Component {
 
     async doLogin() {
 
-
         if(!this.state.username) {
             return;
         }
@@ -42,7 +43,7 @@ class LoginForm extends React.Component {
         }
         this.setState({
             buttonDisabled: false
-        })
+        });
 
         try{
             let res = await fetch('/login', {
@@ -60,6 +61,8 @@ class LoginForm extends React.Component {
             if (result && result.success){
                 UserStore.isLoggedIn = true;
                 UserStore.username = result.username;
+                UserStore.black = result.black;
+                UserStore.white = result.white;
             }
             else if (result && result.success === false){
                 this.resetForm();
@@ -101,6 +104,8 @@ class LoginForm extends React.Component {
             if (result && result.success){
                 UserStore.isLoggedIn = true;
                 UserStore.username = result.username;
+                UserStore.black = result.black;
+                UserStore.white = result.white;
             }
             else if (result && result.success === false){
                 this.resetForm();

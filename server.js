@@ -6,8 +6,9 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const Router = require('./Router');
 const WebSocket = require('ws');
+const WebSocketServer = require('ws').Server;
 
-const wss = new WebSocket.Server({ port: 8181 });
+const wss = new WebSocketServer({port:3030});
 
 wss.on('connection', function connection(ws) {
     ws.on('message', function incoming(data) {

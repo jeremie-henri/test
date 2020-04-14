@@ -3,6 +3,14 @@ body, html, #root, .app, .container {
   height: 100%;
 }
 
+.mer{
+  position: absolute;
+  text-align: left;
+  padding-left: 64%;
+  pointer-events: none;
+  padding-bottom: 13%;
+}
+
 .container {
   font-size: 28px;
   color: #fff;
@@ -52,6 +60,24 @@ body, html, #root, .app, .container {
   border-radius: 4px;
   background: #fff;
   cursor: pointer;
+}
+
+.btnL{
+  position: absolute;
+  margin-right: 100px;
+  color: #565656;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  border: solid 2px #1189de;
+  margin-top: -23%;
+  margin-left: 47%;
+  background: #fff;
+  cursor: pointer;
+}
+
+.wins{
+  text-align: center;
 }
 
 .div_grid{

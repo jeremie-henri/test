@@ -3,7 +3,8 @@ import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
 import UserStore from "./stores/UserStore";
 
-const URL = "wss://jeremie-henri-test.glitch.me:8181";
+//const URL = "ws://www.jeremie-henri-test.glitch.me:8080";
+const URL = "wss://connect.websocket.in/v3/1?apiKey=lG1bTjO8s09k4ZIRohyIh9flldycsPTD7I4eQuD1CQdIFc3EHlMtuQnPhuX6";
 
 class Chat extends Component {
     state = {

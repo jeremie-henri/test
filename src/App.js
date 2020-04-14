@@ -23,6 +23,8 @@ class App extends React.Component {
                 UserStore.loading = false;
                 UserStore.isLoggedIn = true;
                 UserStore.username = result.username;
+                UserStore.black = result.black;
+                UserStore.white = result.white;
             }
             else {
                 UserStore.loading = false;
@@ -75,15 +77,18 @@ class App extends React.Component {
                     <div className='app'>
                         <Chat/>
                         <div className='container'>
-                            Welcome {UserStore.username}
-                            <div className="submitButton">
-                                <button
-                                    className='btn'
-                                    onClick={ () =>this.doLogout()}
-                                >LogOut
-                                </button>
-                                <Board></Board>
+                            <div className="wins">
+                                Total Wins : <br/>
+                                Black :{UserStore.black} | White :{UserStore.white}
                             </div>
+                            <button
+                                className='btnL'
+                                onClick={ () =>this.doLogout()}
+                            >LogOut
+                            </button>
+                            <h2><a href="https://en.wikipedia.org/wiki/Gomoku" style={{textDecoration:"none"}}>五子棋</a></h2>
+                            Welcome {UserStore.username}
+                            <Board></Board>
                         </div>
                     </div>
                 );
@@ -92,7 +97,6 @@ class App extends React.Component {
                 <div className="app">
                     <div className='container'>
                         <h1>Projet React L3</h1>
-
                         <LoginForm />
 
                     </div>

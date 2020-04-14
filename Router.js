@@ -6,7 +6,13 @@ class Router{
         this.register(app,db);
         this.logout(app, db);
         this.isLoggedIn(app, db);
+        this.update(app, db);
     }
+
+    update (app, db){
+        console.log("update");
+    }
+
 
     register(app, db){
         app.post('/register', (req, res) => {
@@ -50,14 +56,16 @@ class Router{
                             res.json({
                                 success: false,
                                 msg: 'An error occured at insert'
-                            })
+                            });
                             return;
                         } else {
                             req.session.userID = 101;
                                 res.json({
-                                success: true,
-                                username: username,
-                                msg: 'Success'
+                                    black : 0,
+                                    white : 0,
+                                    success: true,
+                                    username: username,
+                                    msg: 'Success'
                             })
                         }
                     });
@@ -71,8 +79,6 @@ class Router{
 
             let username = req.body.username;
             let password = req.body.password;
-            console.log(username);
-
             username = username.toLowerCase();
 
             if (username.length > 12 || password.length > 12){
@@ -92,8 +98,6 @@ class Router{
                     })
                     return;
                 }
-                console.log(data);
-                console.log(cols);
 
                 if (data && data.length === 1){
 
@@ -101,9 +105,12 @@ class Router{
 
                         if (verified){
                             req.session.userID = data[0].id;
-
+                            req.session.black = data[0].black;
+                            req.session.white = data[0].white;
                             res.json({
                                 success: true,
+                                black : data[0].black,
+                                white : data[0].white,
                                 username: data[0].username
                             })
                         }
