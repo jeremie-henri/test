@@ -6,11 +6,48 @@ class Router{
         this.register(app,db);
         this.logout(app, db);
         this.isLoggedIn(app, db);
-        this.update(app, db);
+        this.updateBlack(app,db);
+        this.updateWhite(app, db);
     }
 
-    update (app, db){
-        console.log("update");
+    updateBlack(app, db){
+        app.post('/updateBlack', (req,res) => {
+            let username = req.session.username;
+            console.log(username);
+            db.query('UPDATE user SET black = black +1 WHERE username = ? LIMIT 1 ', username,(err) =>{
+                if (err){
+                    res.json({
+                        success: false,
+                        msg: "error"
+                    });
+                }
+                else {
+                    res.json({
+                        success: true
+                    })
+                }
+            })
+        })
+    }
+
+    updateWhite(app, db){
+        app.post('/updateWhite', (req,res) => {
+            let username = req.session.username;
+            console.log(username);
+            db.query('UPDATE user SET white = white +1 WHERE username = ? LIMIT 1 ', username,(err) =>{
+                if (err){
+                    res.json({
+                        success: false,
+                        msg: "error"
+                    });
+                }
+                else {
+                    res.json({
+                        success: true
+                    })
+                }
+            })
+        })
     }
 
 
@@ -33,7 +70,7 @@ class Router{
             let cols = [username];
             let aa = [password_b];
 
-            db.query('SELECT * FROM user WHERE username = ? LIMIT 1', cols, (err, data, fields) =>{
+            db.query('SELECT * FROM user WHERE username = ? LIMIT 1', cols, (err, data) =>{
 
                 if (err) {
                     res.json({
@@ -51,7 +88,7 @@ class Router{
                     return;
 
                 } else {
-                    db.query('INSERT INTO user (username, password) VALUES (?, ?)', [cols, aa], (err, data, fields) =>{
+                    db.query('INSERT INTO user (username, password) VALUES (?, ?)', [cols, aa], (err) =>{
                         if (err) {
                             res.json({
                                 success: false,
@@ -60,6 +97,7 @@ class Router{
                             return;
                         } else {
                             req.session.userID = 101;
+                            req.session.username = username;
                                 res.json({
                                     black : 0,
                                     white : 0,
@@ -89,7 +127,7 @@ class Router{
                 return;
             }
             let cols = [username];
-            db.query('SELECT * FROM user WHERE username = ? LIMIT 1', cols, (err, data, fields) =>{
+            db.query('SELECT * FROM user WHERE username = ? LIMIT 1', cols, (err, data) =>{
 
                 if (err) {
                     res.json({
@@ -106,6 +144,7 @@ class Router{
                         if (verified){
                             req.session.userID = data[0].id;
                             req.session.black = data[0].black;
+                            req.session.username = username;
                             req.session.white = data[0].white;
                             res.json({
                                 success: true,
@@ -155,7 +194,7 @@ class Router{
 
             if (req.session.userID){
                 let cols = [req.session.userID];
-                db.query('SELECT * FROM user WHERE id = ? LIMIT 1', (err, data, fields) => {
+                db.query('SELECT * FROM user WHERE id = ? LIMIT 1', (err, data) => {
 
                     if (data && data.lenght === 1 ){
                         res.json({

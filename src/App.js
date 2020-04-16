@@ -78,8 +78,8 @@ class App extends React.Component {
                         <Chat/>
                         <div className='container'>
                             <div className="wins">
-                                Total Wins : <br/>
-                                Black :{UserStore.black} | White :{UserStore.white}
+                                Total Wins<br/>
+                                Black : {UserStore.black} | White : {UserStore.white}
                             </div>
                             <button
                                 className='btnL'

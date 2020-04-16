@@ -16,19 +16,16 @@ class Chat extends Component {
 
     componentDidMount() {
         this.ws.onopen = () => {
-            // on connecting, do nothing but log it to the console
             console.log('connected')
         };
 
         this.ws.onmessage = evt => {
-            // on receiving a message, add it to the list of messages
             const message = JSON.parse(evt.data);
             this.addMessage(message)
         };
 
         this.ws.onclose = () => {
             console.log('disconnected');
-            // automatically try to reconnect on connection loss
             this.setState({
                 ws: new WebSocket(URL),
             })
@@ -39,7 +36,6 @@ class Chat extends Component {
         this.setState(state => ({ messages: [message, ...state.messages] }));
 
     submitMessage = messageString => {
-        // on submitting the ChatInput form, send the message, add it to the list and reset the input
         const message = { name: UserStore.username, message: messageString };
         this.ws.send(JSON.stringify(message));
         this.addMessage(message)

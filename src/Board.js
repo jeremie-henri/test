@@ -1,5 +1,6 @@
 import React from 'react';
 import { Square } from './Square';
+import UserStore from "./stores/UserStore";
 
 export class Board extends React.Component{
     constructor(props){
@@ -12,11 +13,41 @@ export class Board extends React.Component{
         this.handleClick = this.handleClick.bind(this);
         this.ResetGrid = this.ResetGrid.bind(this);
     }
+
     ResetGrid(){
         let newGrid = Array(19).fill().map(x => Array(19).fill("+"));
         this.setState({'grid':newGrid});
     }
 
+    upw(){
+        try {
+            fetch('/updateWhite', {
+                method: 'post',
+                headers: {
+                    'Accept' : 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
+    upb(){
+        try {
+            fetch('/updateBlack', {
+                method: 'post',
+                headers: {
+                    'Accept' : 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
 
     handleClick(x, y){
         if (this.state.grid[x][y] === '+'){
@@ -50,12 +81,15 @@ export class Board extends React.Component{
 
             if (w_horizontal >=  5 || w_vertical >=  5 || w_diag1 >=  5 || w_diag2 >=  5){
                 setTimeout(()=>{alert('white wins')}, 1);
+                UserStore.white = UserStore.white+1;
+                this.upw();
                 this.ResetGrid()
-
             }
 
             if (b_horizontal >= 5 || b_vertical >= 5 || b_diag1 >= 5 || b_diag2 >= 5){
                 setTimeout(()=>{alert('black wins')}, 1);
+                UserStore.black = UserStore.black+1;
+                this.upb();
                 this.ResetGrid()
             }
         }
